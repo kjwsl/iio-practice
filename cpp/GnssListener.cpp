@@ -57,6 +57,12 @@ namespace gnss::impl {
         if (new_path.empty()){
             throw invalid_argument { "Path is empty" };
         }
+
+        if (m_is_running) {
+            throw runtime_error { "You're trying to set path while it's running" };
+        }
+
+
         m_gnss_path = new_path;
     }
 
@@ -64,6 +70,11 @@ namespace gnss::impl {
         if (cb == nullptr) {
             throw invalid_argument{"Callback is nullptr"};
         }
+
+        if (m_is_running) {
+            throw runtime_error { "You're trying to set callback while it's running" };
+        }
+
         m_cb = cb;
     }
 
@@ -75,6 +86,10 @@ namespace gnss::impl {
             return;
         }
 
+        if (m_is_running) {
+            throw runtime_error{"You're trying to set buffer size while it's running" };
+        }
+
         m_buf_size = size;
     }
     
@@ -84,6 +99,11 @@ namespace gnss::impl {
             m_max_events = DEFAULT_MAX_EVENT_CNT;
             return;
         }
+
+        if (m_is_running) {
+            throw runtime_error{"You're trying to set max events while it's running" };
+        }
+
 
         m_max_events = event_cnt;
     }
