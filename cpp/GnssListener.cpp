@@ -127,8 +127,7 @@ namespace gnss::impl {
                 if (epoll_evts[i].data.fd == m_gnss_fd) {
                     lseek(m_gnss_fd, 0, SEEK_SET);
 
-                    ssize_t bytes_read = read(m_gnss_fd, buffer.data(), sizeof(buffer) - 1);
-                    buffer[bytes_read] = '\0';
+                    ssize_t bytes_read = read(m_gnss_fd, buffer.data(), buffer.size());
                     m_cb(bytes_read, buffer);
                     // printf("Sensor value: %s\n", buffer);
                 }
