@@ -6,6 +6,9 @@
 #include <thread>
 #include <functional>
 #include <sys/epoll.h>
+
+#include "Constants.h"
+
 namespace gnss::impl{
 
     using namespace std;
@@ -15,27 +18,28 @@ namespace gnss::impl{
             using GnssCallback = function<void(ssize_t, char[])>;
 
             GnssListener() = delete;
-            virtual ~GnssListener() = default;
+            virtual ~GnssListener();
 
-            GnssListener(string_view gnss_path, GnssCallback cb, const int& buf_size = 64, const int& max_events = 10);
+            GnssListener(const string_view gnss_path, const GnssCallback cb, const int& buf_size = DEFAULT_BUFF_SIZE, const int& max_events = DEFAULT_MAX_EVENT_CNT);
 
             void start();
             void stop();
-            void set_path(string_view new_path);
-            void set_callback(GnssCallback cb);
+            void set_path(const string_view new_path);
+            void set_callback(const GnssCallback cb);
+            void set_buf_size(const int& size);
+            void set_max_events(const int& event_cnt);
 
         private:
             string_view m_gnss_path;
+            int m_gnss_fd;
             int m_buf_size;
             int m_max_events;
+            GnssCallback m_cb;
             // TODO: Should timeout be configurable?
             int m_timeout{1000};
-            int m_callback;
             bool m_is_running{false};
             thread m_thread;
-            GnssCallback m_cb;
 
-            void _on_received();
             void _run();
     };
 }

@@ -1,16 +1,34 @@
 #include <iostream>
+#include <unistd.h>
 
 #include "include/GnssListener.h"
+using namespace gnss::impl;
 
-int main(){
+
+
+int main(int argc, char *argv[]){
+
     auto callback {
         [](ssize_t /* buf_cnt */, char buffer[]) {
             std::cout << "Sensor val: " << buffer << std::endl;
         }
     };
 
-    gnss::impl::GnssListener listener { "/dev/ttyAMA0", callback};
+    if (argc < 2) {
+        throw invalid_argument{"Too few arguments"};
+    }
+    if (argv[1] == nullptr) {
+        throw invalid_argument{"Invalid path"};
+    }
+
+    char *path { argv[1] };
+
+    GnssListener listener { path, callback };
     listener.start();
+
+    sleep(15);
+
+    listener.stop();
 
     return 0;
 }

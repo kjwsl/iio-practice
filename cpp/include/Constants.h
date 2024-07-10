@@ -1,0 +1,7 @@
+#ifndef __CONSTANTS_H
+#define __CONSTANTS_H
+
+#define DEFAULT_MAX_EVENT_CNT 10
+#define DEFAULT_BUFF_SIZE 64
+
+#endif//__CONSTANTS_H
