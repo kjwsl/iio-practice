@@ -11,14 +11,6 @@
 #define MAX_EVENTS 10
 #define BUFF_SIZE  64
 
-static int epoll_fd = -1;
-static int sensor_fd = -1;
-
-int init() {
-    
-        
-}
-
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         fprintf(stderr, "Too few arguments\n");
@@ -72,7 +64,6 @@ int main(int argc, char *argv[]) {
                 printf("Sensor value: %s\n", buffer);
             }
         }
-
     }
 
     close(sensor_fd);
