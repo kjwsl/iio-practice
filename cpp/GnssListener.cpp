@@ -129,6 +129,7 @@ namespace gnss::impl {
 
                     ssize_t bytes_read = read(m_gnss_fd, buffer.data(), buffer.size());
                     m_cb(bytes_read, buffer);
+                    buffer.clear();
                     // printf("Sensor value: %s\n", buffer);
                 }
             }
