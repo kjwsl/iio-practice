@@ -1,6 +1,7 @@
 #include <cassert>
 #include <ios>
 #include <iostream>
+#include <string>
 #include <stdexcept>
 #include <unistd.h>
 #include <fcntl.h>
@@ -110,6 +111,8 @@ namespace gnss::impl {
         }
 
         vector<epoll_event> epoll_evts(m_max_events);
+        string buffer{};
+        buffer.resize(m_buf_size);
 
         while(m_is_running) {
             int event_cnt { epoll_wait(epoll_fd, epoll_evts.data(), m_max_events, m_timeout) };
@@ -124,9 +127,7 @@ namespace gnss::impl {
                 if (epoll_evts[i].data.fd == m_gnss_fd) {
                     lseek(m_gnss_fd, 0, SEEK_SET);
 
-                    char buffer[m_buf_size];
-
-                    ssize_t bytes_read = read(m_gnss_fd, buffer, sizeof(buffer) - 1);
+                    ssize_t bytes_read = read(m_gnss_fd, buffer.data(), sizeof(buffer) - 1);
                     buffer[bytes_read] = '\0';
                     m_cb(bytes_read, buffer);
                     // printf("Sensor value: %s\n", buffer);

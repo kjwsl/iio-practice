@@ -9,7 +9,7 @@ using namespace gnss::impl;
 int main(int argc, char *argv[]){
 
     auto callback {
-        [](ssize_t /* buf_cnt */, char buffer[]) {
+        [](ssize_t /* buf_cnt */, string_view buffer) {
             std::cout << "Sensor val: " << buffer << std::endl;
         }
     };
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
 
     char *path { argv[1] };
 
-    GnssListener listener { path, callback };
+    GnssListener listener { path, callback, 2048 };
     listener.start();
 
     sleep(15);
