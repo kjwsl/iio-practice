@@ -15,7 +15,7 @@ namespace gnss::impl{
 
     class GnssListener {
         public:
-            using GnssCallback = function<void(ssize_t, string_view)>;
+            using GnssCallback = function<void(ssize_t, string)>;
 
             GnssListener() = delete;
             virtual ~GnssListener();

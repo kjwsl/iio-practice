@@ -112,6 +112,9 @@ namespace gnss::impl {
 
         vector<epoll_event> epoll_evts(m_max_events);
 
+        string buffer{};
+        buffer.resize(m_buf_size);
+
         while(m_is_running) {
             int event_cnt { epoll_wait(epoll_fd, epoll_evts.data(), m_max_events, m_timeout) };
             if (event_cnt == -1) {
@@ -121,14 +124,13 @@ namespace gnss::impl {
                 break;
             }
 
-            string buffer{};
-            buffer.resize(m_buf_size);
 
             for (int i = 0; i < event_cnt; i++) {
                 if (epoll_evts[i].data.fd == m_gnss_fd) {
                     lseek(m_gnss_fd, 0, SEEK_SET);
-
                     ssize_t bytes_read = read(m_gnss_fd, buffer.data(), buffer.size());
+                    m_cb(bytes_read, buffer);
+                    buffer.clear();
                     // printf("Sensor value: %s\n", buffer);
                 }
             }
