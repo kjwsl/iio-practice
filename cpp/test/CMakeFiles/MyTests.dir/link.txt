@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/MyTests.dir/nmeatest.cpp.o CMakeFiles/MyTests.dir/test_gnss_listener.cpp.o CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o -o MyTests  ../src/libMyLibrary.a 

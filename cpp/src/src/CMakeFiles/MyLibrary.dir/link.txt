@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMyLibrary.a CMakeFiles/MyLibrary.dir/GnssListener.cpp.o CMakeFiles/MyLibrary.dir/NmeaParser.cpp.o
+/usr/bin/ranlib libMyLibrary.a
