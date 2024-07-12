@@ -51,8 +51,12 @@ namespace gnss::impl {
         size_t pos{};
         size_t new_pos;
         while((new_pos = msg.find(",", pos)) != string::npos){
-            cout << "pos:" << pos << "new_pos: " << new_pos << endl;
-            list.emplace_back(msg.substr(pos, new_pos - pos).data());
+            list.emplace_back(msg.substr(pos, new_pos - pos));
+            /*
+                cout << "pos: " << pos << ", new_pos: " << new_pos
+                    << ", new_pos - pos: " << new_pos - pos << endl;
+            */
+            cout << list.back() << endl;
             pos = new_pos + 1;
         }
 
