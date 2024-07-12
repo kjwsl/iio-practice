@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/ray/code/iio-practice/cpp/src/include -I/home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googlemock/include -I/home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googlemock -isystem /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest/include -isystem /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest
+CXX_INCLUDES = -I/home/ray/code/iio-practice/cpp/GnssLibrary -I/home/ray/code/iio-practice/cpp/PRIVATE -I/home/ray/code/iio-practice/cpp/include -I/home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googlemock/include -I/home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googlemock -isystem /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest/include -isystem /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest
 
 CXX_FLAGS = -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
 

@@ -92,7 +92,7 @@ MyTests_EXTERNAL_OBJECTS =
 
 test/MyTests: test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o
 test/MyTests: test/CMakeFiles/MyTests.dir/build.make
-test/MyTests: src/libMyLibrary.a
+test/MyTests: libGnssLibrary.a
 test/MyTests: lib/libgtest.a
 test/MyTests: lib/libgtest_main.a
 test/MyTests: lib/libgtest.a

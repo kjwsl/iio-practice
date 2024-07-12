@@ -172,17 +172,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named MyLibrary
+# Target rules for targets named GnssLibrary
 
 # Build rule for target.
-MyLibrary: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyLibrary
-.PHONY : MyLibrary
+GnssLibrary: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GnssLibrary
+.PHONY : GnssLibrary
 
 # fast build rule for target.
-MyLibrary/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/MyLibrary.dir/build.make src/CMakeFiles/MyLibrary.dir/build
-.PHONY : MyLibrary/fast
+GnssLibrary/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/build
+.PHONY : GnssLibrary/fast
 
 #=============================================================================
 # Target rules for targets named MyTests
@@ -249,6 +249,78 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+GnssListener.o: GnssListener.cpp.o
+.PHONY : GnssListener.o
+
+# target to build an object file
+GnssListener.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.o
+.PHONY : GnssListener.cpp.o
+
+GnssListener.i: GnssListener.cpp.i
+.PHONY : GnssListener.i
+
+# target to preprocess a source file
+GnssListener.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.i
+.PHONY : GnssListener.cpp.i
+
+GnssListener.s: GnssListener.cpp.s
+.PHONY : GnssListener.s
+
+# target to generate assembly for a file
+GnssListener.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.s
+.PHONY : GnssListener.cpp.s
+
+NmeaParser.o: NmeaParser.cpp.o
+.PHONY : NmeaParser.o
+
+# target to build an object file
+NmeaParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.o
+.PHONY : NmeaParser.cpp.o
+
+NmeaParser.i: NmeaParser.cpp.i
+.PHONY : NmeaParser.i
+
+# target to preprocess a source file
+NmeaParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.i
+.PHONY : NmeaParser.cpp.i
+
+NmeaParser.s: NmeaParser.cpp.s
+.PHONY : NmeaParser.s
+
+# target to generate assembly for a file
+NmeaParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.s
+.PHONY : NmeaParser.cpp.s
+
+Tokenizer.o: Tokenizer.cpp.o
+.PHONY : Tokenizer.o
+
+# target to build an object file
+Tokenizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.o
+.PHONY : Tokenizer.cpp.o
+
+Tokenizer.i: Tokenizer.cpp.i
+.PHONY : Tokenizer.i
+
+# target to preprocess a source file
+Tokenizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.i
+.PHONY : Tokenizer.cpp.i
+
+Tokenizer.s: Tokenizer.cpp.s
+.PHONY : Tokenizer.s
+
+# target to generate assembly for a file
+Tokenizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.s
+.PHONY : Tokenizer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -262,12 +334,21 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... MyLibrary"
+	@echo "... GnssLibrary"
 	@echo "... MyTests"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... GnssListener.o"
+	@echo "... GnssListener.i"
+	@echo "... GnssListener.s"
+	@echo "... NmeaParser.o"
+	@echo "... NmeaParser.i"
+	@echo "... NmeaParser.s"
+	@echo "... Tokenizer.o"
+	@echo "... Tokenizer.i"
+	@echo "... Tokenizer.s"
 .PHONY : help
 
 

@@ -338,13 +338,14 @@ test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o: ../test/test_nmea_parser.cpp
   _deps/googletest-src/googletest/include/gtest/gtest-typed-test.h \
   _deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h \
   _deps/googletest-src/googletest/include/gtest/gtest_prod.h \
-  ../src/include/NmeaParser.h \
-  ../src/include/NmeaTypes.h
+  ../include/NmeaParser.h \
+  ../include/NmeaTypes.h \
+  ../include/Tokenizer.h
 
 
-../src/include/NmeaTypes.h:
+../include/NmeaTypes.h:
 
-../src/include/NmeaParser.h:
+../include/NmeaParser.h:
 
 _deps/googletest-src/googletest/include/gtest/gtest_prod.h:
 
@@ -801,6 +802,8 @@ _deps/googletest-src/googletest/include/gtest/gtest-death-test.h:
 /usr/include/c++/11/bits/exception_ptr.h:
 
 /usr/include/c++/11/ext/string_conversions.h:
+
+../include/Tokenizer.h:
 
 /usr/include/c++/11/bits/nested_exception.h:
 

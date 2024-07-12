@@ -13,7 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/MyLibrary.dir/DependInfo.cmake"
+  "/home/ray/code/iio-practice/cpp/build/CMakeFiles/GnssLibrary.dir/DependInfo.cmake"
   "/home/ray/code/iio-practice/cpp/build/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
   "/home/ray/code/iio-practice/cpp/build/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
   )

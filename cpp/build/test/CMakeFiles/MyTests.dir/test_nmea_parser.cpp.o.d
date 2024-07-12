@@ -273,5 +273,6 @@ test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o: \
  /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest/include/gtest/gtest-typed-test.h \
  /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest/include/gtest/gtest_pred_impl.h \
  /home/ray/code/iio-practice/cpp/build/_deps/googletest-src/googletest/include/gtest/gtest_prod.h \
- /home/ray/code/iio-practice/cpp/test/../src/include/NmeaParser.h \
- /home/ray/code/iio-practice/cpp/test/../src/include/NmeaTypes.h
+ /home/ray/code/iio-practice/cpp/test/../include/NmeaParser.h \
+ /home/ray/code/iio-practice/cpp/test/../include/NmeaTypes.h \
+ /home/ray/code/iio-practice/cpp/test/../include/Tokenizer.h

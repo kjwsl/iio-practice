@@ -1,3 +1,4 @@
+/home/ray/code/iio-practice/cpp/build/CMakeFiles/GnssLibrary.dir
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/test.dir
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/edit_cache.dir
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/rebuild_cache.dir
@@ -5,14 +6,6 @@
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/install.dir
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/install/local.dir
 /home/ray/code/iio-practice/cpp/build/CMakeFiles/install/strip.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/MyLibrary.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/test.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/edit_cache.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/rebuild_cache.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/list_install_components.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/install.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/install/local.dir
-/home/ray/code/iio-practice/cpp/build/src/CMakeFiles/install/strip.dir
 /home/ray/code/iio-practice/cpp/build/test/CMakeFiles/MyTests.dir
 /home/ray/code/iio-practice/cpp/build/test/CMakeFiles/test.dir
 /home/ray/code/iio-practice/cpp/build/test/CMakeFiles/edit_cache.dir

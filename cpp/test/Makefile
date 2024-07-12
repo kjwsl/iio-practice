@@ -60,10 +60,20 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/ray/code/iio-practice/cpp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ray/code/iio-practice/cpp
+CMAKE_BINARY_DIR = /home/ray/code/iio-practice/cpp/test
 
 #=============================================================================
 # Targets provided globally by CMake.
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -85,16 +95,61 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"gmock\" \"gtest\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /home/ray/code/iio-practice/cpp && $(CMAKE_COMMAND) -E cmake_progress_start /home/ray/code/iio-practice/cpp/CMakeFiles /home/ray/code/iio-practice/cpp/test//CMakeFiles/progress.marks
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ray/code/iio-practice/cpp/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ray/code/iio-practice/cpp/test/CMakeFiles /home/ray/code/iio-practice/cpp/test//CMakeFiles/progress.marks
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ray/code/iio-practice/cpp/test/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/clean
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -103,104 +158,168 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/preinstall
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ray/code/iio-practice/cpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-test/CMakeFiles/MyTests.dir/rule:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/MyTests.dir/rule
-.PHONY : test/CMakeFiles/MyTests.dir/rule
+#=============================================================================
+# Target rules for targets named GnssLibrary
 
-# Convenience name for target.
-MyTests: test/CMakeFiles/MyTests.dir/rule
+# Build rule for target.
+GnssLibrary: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GnssLibrary
+.PHONY : GnssLibrary
+
+# fast build rule for target.
+GnssLibrary/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/build
+.PHONY : GnssLibrary/fast
+
+#=============================================================================
+# Target rules for targets named MyTests
+
+# Build rule for target.
+MyTests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyTests
 .PHONY : MyTests
 
 # fast build rule for target.
 MyTests/fast:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/build
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/build
 .PHONY : MyTests/fast
 
-nmeatest.o: nmeatest.cpp.o
-.PHONY : nmeatest.o
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+GnssListener.o: GnssListener.cpp.o
+.PHONY : GnssListener.o
 
 # target to build an object file
-nmeatest.cpp.o:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/nmeatest.cpp.o
-.PHONY : nmeatest.cpp.o
+GnssListener.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.o
+.PHONY : GnssListener.cpp.o
 
-nmeatest.i: nmeatest.cpp.i
-.PHONY : nmeatest.i
+GnssListener.i: GnssListener.cpp.i
+.PHONY : GnssListener.i
 
 # target to preprocess a source file
-nmeatest.cpp.i:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/nmeatest.cpp.i
-.PHONY : nmeatest.cpp.i
+GnssListener.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.i
+.PHONY : GnssListener.cpp.i
 
-nmeatest.s: nmeatest.cpp.s
-.PHONY : nmeatest.s
+GnssListener.s: GnssListener.cpp.s
+.PHONY : GnssListener.s
 
 # target to generate assembly for a file
-nmeatest.cpp.s:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/nmeatest.cpp.s
-.PHONY : nmeatest.cpp.s
+GnssListener.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/GnssListener.cpp.s
+.PHONY : GnssListener.cpp.s
 
-test_gnss_listener.o: test_gnss_listener.cpp.o
-.PHONY : test_gnss_listener.o
+NmeaParser.o: NmeaParser.cpp.o
+.PHONY : NmeaParser.o
 
 # target to build an object file
-test_gnss_listener.cpp.o:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_gnss_listener.cpp.o
-.PHONY : test_gnss_listener.cpp.o
+NmeaParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.o
+.PHONY : NmeaParser.cpp.o
 
-test_gnss_listener.i: test_gnss_listener.cpp.i
-.PHONY : test_gnss_listener.i
+NmeaParser.i: NmeaParser.cpp.i
+.PHONY : NmeaParser.i
 
 # target to preprocess a source file
-test_gnss_listener.cpp.i:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_gnss_listener.cpp.i
-.PHONY : test_gnss_listener.cpp.i
+NmeaParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.i
+.PHONY : NmeaParser.cpp.i
 
-test_gnss_listener.s: test_gnss_listener.cpp.s
-.PHONY : test_gnss_listener.s
+NmeaParser.s: NmeaParser.cpp.s
+.PHONY : NmeaParser.s
 
 # target to generate assembly for a file
-test_gnss_listener.cpp.s:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_gnss_listener.cpp.s
-.PHONY : test_gnss_listener.cpp.s
+NmeaParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.s
+.PHONY : NmeaParser.cpp.s
 
-test_nmea_parser.o: test_nmea_parser.cpp.o
-.PHONY : test_nmea_parser.o
+Tokenizer.o: Tokenizer.cpp.o
+.PHONY : Tokenizer.o
 
 # target to build an object file
-test_nmea_parser.cpp.o:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o
-.PHONY : test_nmea_parser.cpp.o
+Tokenizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.o
+.PHONY : Tokenizer.cpp.o
 
-test_nmea_parser.i: test_nmea_parser.cpp.i
-.PHONY : test_nmea_parser.i
+Tokenizer.i: Tokenizer.cpp.i
+.PHONY : Tokenizer.i
 
 # target to preprocess a source file
-test_nmea_parser.cpp.i:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.i
-.PHONY : test_nmea_parser.cpp.i
+Tokenizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.i
+.PHONY : Tokenizer.cpp.i
 
-test_nmea_parser.s: test_nmea_parser.cpp.s
-.PHONY : test_nmea_parser.s
+Tokenizer.s: Tokenizer.cpp.s
+.PHONY : Tokenizer.s
 
 # target to generate assembly for a file
-test_nmea_parser.cpp.s:
-	cd /home/ray/code/iio-practice/cpp && $(MAKE) $(MAKESILENT) -f test/CMakeFiles/MyTests.dir/build.make test/CMakeFiles/MyTests.dir/test_nmea_parser.cpp.s
-.PHONY : test_nmea_parser.cpp.s
+Tokenizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GnssLibrary.dir/build.make CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.s
+.PHONY : Tokenizer.cpp.s
 
 # Help Target
 help:
@@ -209,17 +328,27 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test"
+	@echo "... GnssLibrary"
 	@echo "... MyTests"
-	@echo "... nmeatest.o"
-	@echo "... nmeatest.i"
-	@echo "... nmeatest.s"
-	@echo "... test_gnss_listener.o"
-	@echo "... test_gnss_listener.i"
-	@echo "... test_gnss_listener.s"
-	@echo "... test_nmea_parser.o"
-	@echo "... test_nmea_parser.i"
-	@echo "... test_nmea_parser.s"
+	@echo "... gmock"
+	@echo "... gmock_main"
+	@echo "... gtest"
+	@echo "... gtest_main"
+	@echo "... GnssListener.o"
+	@echo "... GnssListener.i"
+	@echo "... GnssListener.s"
+	@echo "... NmeaParser.o"
+	@echo "... NmeaParser.i"
+	@echo "... NmeaParser.s"
+	@echo "... Tokenizer.o"
+	@echo "... Tokenizer.i"
+	@echo "... Tokenizer.s"
 .PHONY : help
 
 
@@ -231,6 +360,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ray/code/iio-practice/cpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
