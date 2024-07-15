@@ -51,7 +51,13 @@ namespace gnss::impl {
             int day;
     };
 
-    enum NmeaMode {
+    enum NmeaMode1 {
+        M,
+        A
+    };
+
+
+    enum NmeaMode2 {
         AUTONOMOUS,
         DGPS,
         DR,
@@ -68,6 +74,15 @@ namespace gnss::impl {
         virtual ~NmeaData() = default;
         virtual unique_ptr<NmeaData> parse(const unique_ptr<NmeaData> common);
         virtual unique_ptr<NmeaData> parse_sentence(const unique_ptr<NmeaData> common) = 0;
+    };
+
+    struct GsaData : public NmeaData {
+        NmeaMode1 mode1;
+        NmeaMode2 mode2;
+        int sat_used_list[12];
+        double pdop;
+        double hdop;
+        double vdop;
     };
 
     struct RmcData : public NmeaData {
@@ -97,7 +112,7 @@ namespace gnss::impl {
          */
         double mag_variation;
 
-        NmeaMode mode;
+        NmeaMode2 mode;
     };
 
     struct VtgData : public NmeaData {
@@ -123,7 +138,7 @@ namespace gnss::impl {
          */
         double mag_variation;
 
-        NmeaMode mode;
+        NmeaMode2 mode;
     };
 
     struct Coordinates {
