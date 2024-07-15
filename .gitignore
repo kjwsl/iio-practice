@@ -3,3 +3,5 @@ cpp/CMakeCache.txt
 cpp/cmake_install.cmake
 cpp/Makefile
 cpp/iio-practice
+cpp/.cache/clangd/index
+cpp/.idea
