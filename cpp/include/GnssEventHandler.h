@@ -33,12 +33,7 @@ namespace gnss::impl {
 
             string_view getBuffer() { return mEvent.sentence; }
             void writeToBuffer(const string_view str) {
-                if (str.size() > mEvent.sentence.size()) {
-                    throw runtime_error { "Buffer size is not big enough to hold the string" };
-                }
-
                 mEvent.sentence += str;
-                mEvent.timeMs = getCurrentTimeMs_();
             }
 
             const std::optional<GnssEvent> extractNmeaSentence() noexcept{
@@ -68,11 +63,11 @@ namespace gnss::impl {
                     } 
                     pos++;
                 } 
-                mEvent.sentence = mEvent.sentence.substr(pos);
+                mEvent.sentence = mEvent.sentence.erase(0, pos);
             }
 
             bool hasNextNmeaSentence() {
-                return (mEvent.sentence.front() == '$' && mEvent.sentence.back() == '\n');
+                return (mEvent.sentence.front() == '$' && mEvent.sentence.find("\n") != string::npos);
             }
 
 
