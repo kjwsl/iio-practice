@@ -12,105 +12,105 @@
 namespace gnss::impl {
     using namespace std; 
 
-    GnssListener::GnssListener(const string_view gnss_path, const GnssCallback cb, const int& buf_size, const int& max_events) {
-        set_path(gnss_path);
-        set_callback(cb);
-        set_buf_size(buf_size);
-        set_max_events(max_events);
+    GnssListener::GnssListener(const string_view gnssPath, const GnssCallback callback, const int& bufferSize, const int& maxEvents) {
+        setPath(gnssPath);
+        setCallback(callback);
+        setBufSize(bufferSize);
+        setMaxEvents(maxEvents);
     }
 
     GnssListener::~GnssListener() {
-        if (m_gnss_fd != -1) {
-            close(m_gnss_fd);
-            m_gnss_fd = -1;
+        if (mGnssFd != -1) {
+            close(mGnssFd);
+            mGnssFd = -1;
         }
 
     }
 
     void GnssListener::start() {
-        if (m_is_running) {
+        if (mIsRunning) {
             cout << "GnssListener is already running" << endl;
             return;
         }
 
-        m_is_running = true;
-        m_thread = thread{&GnssListener::_run, this};
+        mIsRunning = true;
+        mThread = thread{&GnssListener::run_, this};
     }
 
     void GnssListener::stop() {
-        if (!m_is_running) {
+        if (!mIsRunning) {
             cout << "GnssLister is not running" << endl;
             return;
         }
 
-        m_is_running = false;
-        if (m_thread.joinable()) {
-            m_thread.join();
-            if (m_gnss_fd == -1) {
-                close(m_gnss_fd);
-                m_gnss_fd = -1;
+        mIsRunning = false;
+        if (mThread.joinable()) {
+            mThread.join();
+            if (mGnssFd == -1) {
+                close(mGnssFd);
+                mGnssFd = -1;
             }
         }
     }
 
-    void GnssListener::set_path(string_view new_path) {
-        if (new_path.empty()){
+    void GnssListener::setPath(string_view newPath) {
+        if (newPath.empty()){
             throw invalid_argument { "Path is empty" };
         }
 
-        if (m_is_running) {
+        if (mIsRunning) {
             throw runtime_error { "You're trying to set path while it's running" };
         }
 
 
-        m_gnss_path = new_path;
+        mGnssPath = newPath;
     }
 
-    void GnssListener::set_callback(GnssCallback cb) {
+    void GnssListener::setCallback(GnssCallback cb) {
         if (cb == nullptr) {
             throw invalid_argument{"Callback is nullptr"};
         }
 
-        if (m_is_running) {
+        if (mIsRunning) {
             throw runtime_error { "You're trying to set callback while it's running" };
         }
 
-        m_cb = cb;
+        mCallback = cb;
     }
 
 
-    void GnssListener::set_buf_size(const int& size) {
+    void GnssListener::setBufSize(const int& size) {
         if (size < 1) {
-            cout << "Buffer size must be greater than 1, defaults to " << m_buf_size << "." << endl;
-            m_buf_size = DEFAULT_BUFF_SIZE;
+            cout << "Buffer size must be greater than 1, defaults to " << mBufferSize << "." << endl;
+            mBufferSize = DEFAULT_BUFF_SIZE;
             return;
         }
 
-        if (m_is_running) {
+        if (mIsRunning) {
             throw runtime_error{"You're trying to set buffer size while it's running" };
         }
 
-        m_buf_size = size;
+        mBufferSize = size;
     }
     
-    void GnssListener::set_max_events(const int& event_cnt) {
-        if (event_cnt < 1) {
-            cout << "Max num of events must be greater than 1, defaults to " << m_max_events << "." << endl;
-            m_max_events = DEFAULT_MAX_EVENT_CNT;
+    void GnssListener::setMaxEvents(const int& eventCnt) {
+        if (eventCnt < 1) {
+            cout << "Max num of events must be greater than 1, defaults to " << mMaxEvents << "." << endl;
+            mMaxEvents = DEFAULT_MAX_EVENT_CNT;
             return;
         }
 
-        if (m_is_running) {
+        if (mIsRunning) {
             throw runtime_error{"You're trying to set max events while it's running" };
         }
 
 
-        m_max_events = event_cnt;
+        mMaxEvents = eventCnt;
     }
 
-    void GnssListener::_run() {
-        m_gnss_fd = open(m_gnss_path.data(), O_RDONLY | O_NONBLOCK | O_NDELAY | O_NOCTTY);
-        if (m_gnss_fd == -1) {
+    void GnssListener::run_() {
+        mGnssFd = open(mGnssPath.data(), O_RDONLY | O_NONBLOCK | O_NDELAY | O_NOCTTY);
+        if (mGnssFd == -1) {
             assert("File descriptor of GNSS, or epoll is empty somehow");
         }
 
@@ -122,38 +122,46 @@ namespace gnss::impl {
         epoll_event epoll_request {
             .events = EPOLLIN,
             .data = {
-                .fd = m_gnss_fd,
+                .fd = mGnssFd,
             }
         };
 
-        if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, m_gnss_fd, &epoll_request) == -1) {
+        if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, mGnssFd, &epoll_request) == -1) {
             throw runtime_error { "Failed to add Gnss fd to epoll watchlist" };
         }
 
-        vector<epoll_event> epoll_evts(m_max_events);
+        vector<epoll_event> epollEvts(mMaxEvents);
 
 
-        while (m_is_running) {
-            int event_cnt { epoll_wait(epoll_fd, epoll_evts.data(), m_max_events, m_timeout) };
-            if (event_cnt == -1) {
+        GnssEventHandler eventHandler{ };
+        while (mIsRunning) {
+            int eventCnt { epoll_wait(epoll_fd, epollEvts.data(), mMaxEvents, mTimeout) };
+            if (eventCnt == -1) {
                 if (errno == EINTR) {
                     continue;
                 }
                 break;
             }
 
-
-            for (int i = 0; i < event_cnt; i++) {
-                if (epoll_evts[i].data.fd == m_gnss_fd) {
-                    string buffer{};
-                    buffer.resize(m_buf_size);
-
-                    lseek(m_gnss_fd, 0, SEEK_SET);
-                    ssize_t bytes_read = read(m_gnss_fd, buffer.data(), buffer.size());
-                    m_cb(bytes_read, buffer);
-                    buffer.clear();
-                    // printf("Sensor value: %s\n", buffer);
+            eventHandler.clear();
+            string buffer {};
+            buffer.resize(mBufferSize);
+            for (int i = 0; i < eventCnt; i++) {
+                if (epollEvts[i].data.fd == mGnssFd) {
+                    lseek(mGnssFd, 0, SEEK_SET);
+                    ssize_t bytes_read = read(mGnssFd, buffer.data(), buffer.size());
+                    if (bytes_read <= 0) continue;
+                    eventHandler.writeToBuffer(buffer.data());
                 }
+            }
+            while(eventHandler.hasNextNmeaSentence()) {
+                const auto& sentence { eventHandler.extractNmeaSentence()};
+                if (sentence == nullopt) {
+                    // This doesn't make sense, but just in case
+                    continue;
+                }
+                mCallback(sentence.value());
+
             }
         }
     }

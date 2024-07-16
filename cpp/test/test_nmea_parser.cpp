@@ -6,7 +6,6 @@
 
 using namespace std;
 using namespace gnss::impl;
-using namespace ray::utils;
 
 
 TEST(NmeaParserTestSuite, NmeaParserTestCode) {

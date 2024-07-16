@@ -1,13 +1,13 @@
 #ifndef __GNSS_LISTENER_H__
 #define __GNSS_LISTENER_H__
 
-#include <memory>
 #include <string_view>
 #include <thread>
 #include <functional>
 #include <sys/epoll.h>
 
 #include "Constants.h"
+#include "GnssEventHandler.h"
 
 namespace gnss::impl{
 
@@ -15,32 +15,32 @@ namespace gnss::impl{
 
     class GnssListener {
         public:
-            using GnssCallback = function<void(ssize_t, string_view)>;
+            using GnssCallback = function<void(const GnssEvent&)>;
 
             GnssListener() = delete;
             virtual ~GnssListener();
 
-            GnssListener(const string_view gnss_path, const GnssCallback cb, const int& buf_size = DEFAULT_BUFF_SIZE, const int& max_events = DEFAULT_MAX_EVENT_CNT);
+            GnssListener(const string_view gnssPath, const GnssCallback cb, const int& bufSize = DEFAULT_BUFF_SIZE, const int& maxEvents = DEFAULT_MAX_EVENT_CNT);
 
             void start();
             void stop();
-            void set_path(const string_view new_path);
-            void set_callback(const GnssCallback cb);
-            void set_buf_size(const int& size);
-            void set_max_events(const int& event_cnt);
+            void setPath(const string_view newPath);
+            void setCallback(const GnssCallback cb);
+            void setBufSize(const int& size);
+            void setMaxEvents(const int& eventCnt);
 
         private:
-            string_view m_gnss_path;
-            int m_gnss_fd;
-            int m_buf_size;
-            int m_max_events;
-            GnssCallback m_cb;
+            string_view mGnssPath;
+            int mGnssFd;
+            int mBufferSize;
+            int mMaxEvents;
+            GnssCallback mCallback;
             // TODO: Should timeout be configurable?
-            int m_timeout{1000};
-            bool m_is_running{false};
-            thread m_thread;
+            int mTimeout{1000};
+            bool mIsRunning{false};
+            thread mThread;
 
-            void _run();
+            void run_();
     };
 }
 

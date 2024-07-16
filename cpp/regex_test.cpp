@@ -3,12 +3,11 @@
 #include <string>
 #include <cstring>
 #include <optional>
+#include <algorithm>
 #include <regex>
 #include <chrono>
 
-
 #include "include/default/GnssLocation.h"
-#include "include/default/GnssMeasurement.h"
 
 using namespace std;
 using namespace android::hardware::gnss;
@@ -70,9 +69,9 @@ optional<vector<vector<string>>> get_regex_matches(const string& src, const rege
     
     while (regex_search(text, matches, re)) {
         vector<string> tmp {};
-        for (const auto& match : matches) {
-            tmp.emplace_back(match.str());
-        }
+        transform(matches.cbegin(), matches.cend(), matches.cbegin(), [tmp](auto match){
+                tmp.emplace_back(match.str());
+                });
         if (tmp.empty()) {
             return nullopt;
         }
@@ -93,9 +92,9 @@ optional<vector<string>> get_regex_match(const string& src, const regex& re) {
     vector<string> ret;
     
     if (regex_search(text, matches, re)) {
-        for (const auto& match : matches) {
-            ret.emplace_back(match.str());
-        }
+        transform(matches.cbegin(), matches.cend(), matches.begin(), [ret](const auto& match){
+                ret.emplace_back(match.str());
+                });
         return ret;
     }
     return nullopt;
@@ -114,16 +113,6 @@ void parse_gsa(const string& sentence) {
     const auto& match_values { *std::move(matches) };
 
 
-    
-    gnss::impl::NmeaMode1 mode1;
-    gnss::impl::NmeaMode2 mode2;
-    if (match_values[0] == "M") {
-        mode1 = gnss::impl::NmeaMode1::M;
-    } else {
-        mode1 = gnss::impl::NmeaMode1::A;
-    }
-
-    if (match_values[1] == "")
 
     const string& mode2 { match_values[1] };
     const string& pdop { match_values[14] };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <ctime>
 
 #include "../include/GnssListener.h"
 using namespace gnss::impl;
@@ -9,8 +10,9 @@ using namespace gnss::impl;
 int main(int argc, char *argv[]){
 
     auto callback {
-        [](ssize_t /* buf_cnt */, string_view buffer) {
-            std::cout << "Sensor val: " << buffer << std::endl;
+        [](const GnssEvent& event) {
+            std::cout << "Timestamp: " << event.timeMs << endl;
+            std::cout << "Sentence: " << event.sentence << endl;
         }
     };
 
