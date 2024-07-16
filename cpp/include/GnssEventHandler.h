@@ -33,7 +33,7 @@ namespace gnss::impl {
 
             string_view getBuffer() { return mEvent.sentence; }
             void writeToBuffer(const string_view str) {
-                mEvent.sentence += str;
+                mEvent.sentence += str.data();
             }
 
             const std::optional<GnssEvent> extractNmeaSentence() noexcept{
@@ -44,7 +44,7 @@ namespace gnss::impl {
 
                 auto pos { mEvent.sentence.find("\n")};
 
-                string_view buf { mEvent.sentence.substr(0, pos)};
+                string buf { mEvent.sentence.substr(0, pos)};
                 mEvent.sentence.erase(0, pos);
 
                 return GnssEvent{buf, getCurrentTimeMs_()};
@@ -67,7 +67,7 @@ namespace gnss::impl {
             }
 
             bool hasNextNmeaSentence() {
-                return (mEvent.sentence.front() == '$' && mEvent.sentence.find("\n") != string::npos);
+                return (mEvent.sentence.find("$") != string::npos && mEvent.sentence.find("\n") != string::npos);
             }
 
 
