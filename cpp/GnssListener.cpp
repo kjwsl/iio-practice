@@ -12,7 +12,7 @@
 namespace gnss::impl {
     using namespace std; 
 
-    GnssListener::GnssListener(const string_view gnssPath, const GnssCallback callback, const int& bufferSize, const int& maxEvents) {
+    GnssListener::GnssListener(const string_view gnssPath, const GnssCallback& callback, const int& bufferSize, const int& maxEvents) {
         setPath(gnssPath);
         setCallback(callback);
         setBufSize(bufferSize);

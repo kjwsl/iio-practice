@@ -20,7 +20,7 @@ namespace gnss::impl{
             GnssListener() = delete;
             virtual ~GnssListener();
 
-            GnssListener(const string_view gnssPath, const GnssCallback cb, const int& bufSize = DEFAULT_BUFF_SIZE, const int& maxEvents = DEFAULT_MAX_EVENT_CNT);
+            GnssListener(const string_view gnssPath, const GnssCallback& cb, const int& bufSize = DEFAULT_BUFF_SIZE, const int& maxEvents = DEFAULT_MAX_EVENT_CNT);
 
             void start();
             void stop();
