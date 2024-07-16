@@ -5,3 +5,5 @@ cpp/Makefile
 cpp/iio-practice
 cpp/.cache/clangd/index
 cpp/.idea
+cpp/build
+cpp/test/.cache/clangd/index

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/MyTests.dir/test_nmea_parser.cpp.o -o MyTests  ../libGnssLibrary.a ../lib/libgtest.a ../lib/libgtest_main.a ../lib/libgtest.a 

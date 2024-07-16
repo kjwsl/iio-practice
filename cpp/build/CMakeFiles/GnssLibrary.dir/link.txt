@@ -1,2 +1,0 @@
-/usr/bin/ar qc libGnssLibrary.a CMakeFiles/GnssLibrary.dir/GnssListener.cpp.o CMakeFiles/GnssLibrary.dir/NmeaParser.cpp.o CMakeFiles/GnssLibrary.dir/Tokenizer.cpp.o
-/usr/bin/ranlib libGnssLibrary.a
