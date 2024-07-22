@@ -24,6 +24,7 @@
 #include "AGnss.h"
 #include "AGnssRil.h"
 #include "impl/include/Constants.h"
+#include ""
 #include "GnssAntennaInfo.h"
 #include "Gnss.h"
 #include "default_headers/IGnssCallback.h"
@@ -123,45 +124,8 @@ std::unique_ptr<GnssLocation> Gnss::getLocationFromHW() {
 }
 
 ScopedAStatus Gnss::start() {
-    ALOGD("start()");
-    if (mIsActive) {
-        ALOGW("Gnss has started. Restarting...");
-        stop();
-    }
+    
 
-    mIsActive = true;
-    mThreadBlocker.reset();
-    // notify measurement engine to update measurement interval
-    mGnssMeasurementInterface->setLocationEnabled(true);
-    this->reportGnssStatusValue(IGnssCallback::GnssStatusValue::SESSION_BEGIN);
-    mThread = std::thread([this]() {
-        if (!mGnssMeasurementEnabled || mMinIntervalMs <= mGnssMeasurementIntervalMs) {
-            this->reportSvStatus();
-        }
-        if (!mFirstFixReceived) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(TTFF_MILLIS));
-            mFirstFixReceived = true;
-        }
-        do {
-            if (!mIsActive) {
-                break;
-            }
-            if (!mGnssMeasurementEnabled || mMinIntervalMs <= mGnssMeasurementIntervalMs) {
-                this->reportSvStatus();
-            }
-            this->reportNmea();
-
-            auto currentLocation = getLocationFromHW();
-            mGnssPowerIndication->notePowerConsumption();
-            if (currentLocation != nullptr) {
-                this->reportLocation(*currentLocation);
-            } else {
-                const auto location = Utils::getMockLocation();
-                this->reportLocation(location);
-            }
-        } while (mIsActive && mThreadBlocker.wait_for(std::chrono::milliseconds(mMinIntervalMs)));
-    });
-    return ScopedAStatus::ok();
 }
 
 ScopedAStatus Gnss::stop() {
@@ -188,7 +152,8 @@ void Gnss::reportLocation(const GnssLocation& location) const {
         ALOGE("%s: GnssCallback is null.", __func__);
         return;
     }
-    auto status = location->gnssLocationCb(location);
+    auto status = sGnssCallback->gnssLocationCb(location);
+
     if (!status.isOk()) {
         ALOGE("%s: Unable to invoke gnssLocationCb", __func__);
     }

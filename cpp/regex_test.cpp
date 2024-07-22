@@ -9,6 +9,8 @@
 
 #include "include/default/GnssLocation.h"
 
+#define BASELINE_ACCURACY 2.5
+
 using namespace std;
 using namespace android::hardware::gnss;
 
@@ -148,7 +150,7 @@ optional<GnssLocation> parse_gga(const string& src) {
         .latitudeDegrees = (stoi(match_vals[3]) + stod(match_vals[4])/60)*(match_vals[5] == "S" ? -1 : 1),
         .longitudeDegrees = (stoi(match_vals[6]) + stod(match_vals[7])/60)*(match_vals[8] == "W" ? -1 : 1),
         .altitudeMeters = stod(match_vals[12])+stod(match_vals[14]),
-        .horizontalAccuracyMeters = 2.5 * stod(match_vals[11]), // TODO: 2.5 is the baseline accuracy of the sensor (neo6m), make it generic
+        .horizontalAccuracyMeters = BASELINE_ACCURACY * stod(match_vals[11]), // TODO: 2.5 is the baseline accuracy of the sensor (neo6m), make it generic
         .timestampMillis = static_cast<int64_t>((stoi(match_vals[0])*3600 + stoi(match_vals[1])*60 + stod(match_vals[2]))*1000),
 
     };
@@ -181,6 +183,8 @@ void parse(const string& str) {
             parse_gsa(rest);
         } else if (msg_type == "GGA") {
             parse_gga(rest);
+        } else if (msg_type == "GSV") {
+            parse_gsv(rest);
         }
 
 

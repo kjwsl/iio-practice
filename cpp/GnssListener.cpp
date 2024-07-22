@@ -160,7 +160,9 @@ namespace gnss::impl {
                     // This doesn't make sense, but just in case
                     continue;
                 }
-                mCallback(sentence.value());
+                thread([this, sentence](){
+                        mCallback(sentence.value());
+                        });
 
             }
         }

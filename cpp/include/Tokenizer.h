@@ -15,22 +15,22 @@ namespace gnss::impl {
         Tokenizer(const string_view src, const string_view separator);
         virtual ~Tokenizer() = default;
 
-        void               tokenize()  ;
-        void               set_source(const string_view src);
-        void               set_separator(const string_view separator);
+        void               tokenize();
+        void               setSource(const string_view src);
+        void               setSeparator(const string_view separator);
 
-        string_view        get_source()       const noexcept;
-        string_view        get_separator()    const noexcept;
-        optional<token_t>  get_next_token()         noexcept;
-        int                get_token_size()   const noexcept;
-        bool               has_more_tokens()  const noexcept;
-        void               print_tokens()     const noexcept;
+        string_view        getSource()       const noexcept;
+        string_view        getSeparator()    const noexcept;
+        optional<token_t>  getNextToken()         noexcept;
+        int                getTokenSize()   const noexcept;
+        bool               hasMoreTokens()  const noexcept;
+        void               printTokens()     const noexcept;
 
     private:
-        string_view m_src{};
-        string_view m_separator{};
-        tokenlist_t m_tokens{};
-        int         m_token_cnt{0};
+        string_view mSrc{};
+        string_view mSeparator{};
+        tokenlist_t mTokens{};
+        int         mTokenCnt{0};
     };
 }
 
